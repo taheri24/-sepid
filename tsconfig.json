@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "target": "ESNext",
+        "allowJs": true,
+        "lib": ["ES2020","ES2019","ES2015.Iterable","ES7","ES2018","ES2019.Object"]
+    },
+    "include": [
+        "./src/**/*", "scripts/resource-builder.js"
+    ]
+}
