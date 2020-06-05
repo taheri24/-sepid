@@ -1,6 +1,6 @@
 {
   "name": "safe-hook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "keywords": [],
   "main": "dist/safe-hook.umd.js",
@@ -36,7 +36,7 @@
     "postinstall-disabled": "ts-node tools/init",
     "travis-deploy-once": "travis-deploy-once",
     "prepublish": "npm run loc",
-    "loc":"sloc src/ "
+    "loc": "sloc src/ "
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
