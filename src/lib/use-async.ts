@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react'
 export const useAsync = (asyncFunction: Function, { immediate = false, delay = 0 } = {}) => {
-  const [pending, setPending] = useState<true | undefined>(undefined)
   const [output, setOutput] = useState(null)
   const setError = (error: any) => setOutput({ error } as any)
-  const trunOffPending = setPending.bind(null, undefined)
-  const [inputValues, setInputValues] = useState<{
-    target?: any
-    inputArgs?: any[]
-    invokeTime?: number
-  }>({})
+  const [inputValues, setInputValues] = useState<
+    | undefined
+    | {
+        target?: any
+        inputArgs?: any[]
+        invokeTime?: number
+      }
+  >({})
+  const trunOffPending = setInputValues.bind(null, undefined)
   function execute(this: any, ...inputArgs: any[]) {
-    setPending(true)
     setInputValues({ target: this, inputArgs, invokeTime: +new Date() })
   }
   useEffect(
     function() {
-      if (!inputValues.invokeTime) return
+      if (!inputValues || !inputValues.invokeTime) return
       const promiseResult = Promise.resolve(
         asyncFunction.apply(inputValues.target, inputValues.inputArgs)
       )
       promiseResult.then(setOutput, setError).finally(trunOffPending)
     },
-    [inputValues.invokeTime]
+    [inputValues && inputValues.invokeTime]
   )
   useEffect(
     function() {
@@ -29,5 +30,5 @@ export const useAsync = (asyncFunction: Function, { immediate = false, delay = 0
     },
     [immediate]
   )
-  return [execute, output, pending]
+  return [execute, output, Boolean(inputValues)]
 }
